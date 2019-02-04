@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include vfinext *.css
+recursive-include vfinext *.csv
+recursive-include vfinext *.html
+recursive-include vfinext *.ico
+recursive-include vfinext *.js
+recursive-include vfinext *.json
+recursive-include vfinext *.md
+recursive-include vfinext *.png
+recursive-include vfinext *.py
+recursive-include vfinext *.svg
+recursive-include vfinext *.txt
+recursive-exclude vfinext *.pyc
