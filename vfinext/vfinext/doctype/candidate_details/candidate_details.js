@@ -185,7 +185,7 @@ frappe.ui.form.on('Candidate Details', {
                         options: ["Select"]},
                         {fieldtype: "Data", fieldname: "skills_used", label: __("Skills Used"), reqd: 0},
                     ]
-                });
+                    });
                 dialog.show();
                 frm.set_value("project_details", "Updated");
                 
@@ -445,6 +445,41 @@ frappe.ui.form.on('Candidate Details', {
                 }
             });
             
+        },
+       validate:function(frm){
+        var dialog = new frappe.ui.Dialog({
+            fields: [
+            {"fieldtype": "Heading", "label":"Registration code", "fieldname": "registration"},
+            {"fieldtype": "Data", "label":"", "fieldname": "code"}
+            //  {"fieldtype": "Button", "label":"back", "fieldname": "back"}
+            ]
+            });
+            dialog.set_primary_action(__("verify"), function() {
+                var t = dialog.get_values();
+            frappe.call({
+                "method":"vfinext.vfinext.doctype.token_summary.token_summary.tokenvalidation",
+                args:{
+                    'tokens':t.code,
+                },
+                callback:function(r){
+                    if(r.message == "n"){
+                        frappe.msgprint(__("Register successful \n THANKYOU FOR REGISTRATION"))
+                        frappe.set_route("Form","Candidate Details","New Candidate Details")
+                    }
+                    if(r.message =="c"){
+                        frappe.msgprint(__("coupon already used"))
+                    }
+                    if(r.message =="b"){
+                        frappe.msgprint(__("invalid Code"))
+                    }
+                    
+                 }
+                
+            })
+            });
+            dialog.show();
+            // frappe.set_route("Form","Process");
         }
+
 
 });
